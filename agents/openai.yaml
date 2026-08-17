@@ -1,0 +1,7 @@
+interface:
+  display_name: "华为画报旅行风光"
+  short_description: "为华为画报旅行风光提供选题、审核、月报复盘与来源核验"
+  default_prompt: "使用 $huabao-travel-content-planner 依据素材库、已做标题和近期已出选题，策划一批旅行风光候选。"
+
+policy:
+  allow_implicit_invocation: true
