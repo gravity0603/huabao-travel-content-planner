@@ -32,7 +32,9 @@ def validate_block(title: str, declared: int, block: str, index: int) -> list[st
         errors.append(f"选题 {index}：标题声明 {declared} 字，实际 {actual} 字。")
     if actual > 7:
         errors.append(f"选题 {index}：旅行标题超过 7 字（实际 {actual} 字）。")
-    if any(token in title for token in ("吗", "么", "呢", "为何", "如何")) and not title.endswith("？"):
+    if title.endswith("?"):
+        errors.append(f"选题 {index}：疑问句必须使用中文问号，不可使用半角 ?。")
+    elif any(token in title for token in ("吗", "么", "呢", "为何", "如何")) and not title.endswith("？"):
         errors.append(f"选题 {index}：疑问式标题缺少中文问号。")
 
     lines = [line.strip() for line in block.splitlines() if line.strip()]
@@ -49,8 +51,10 @@ def validate_block(title: str, declared: int, block: str, index: int) -> list[st
         errors.append(f"选题 {index}：信息源必须是 [已验证] [来源名·文章标题](https://...)。")
 
     status = next((line[len(STATUS_PREFIX):] for line in lines if line.startswith(STATUS_PREFIX)), "")
-    p_score = score_from_line(next((line for line in lines if line.startswith(P_PREFIX)), ""))
-    month_score = score_from_line(next((line for line in lines if line.startswith(MONTH_PREFIX)), ""))
+    p_match = re.search(r"P\s*潜力：\s*(\d+)\s*/\s*10", block)
+    month_match = re.search(r"月报潜力：\s*(\d+)\s*/\s*10", block)
+    p_score = int(p_match.group(1)) if p_match else None
+    month_score = int(month_match.group(1)) if month_match else None
     if not status:
         errors.append(f"选题 {index}：缺少状态。")
     if p_score is None or month_score is None:
