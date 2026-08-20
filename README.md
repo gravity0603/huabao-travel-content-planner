@@ -1,54 +1,53 @@
 # 华为画报旅行风光专项 Skill
 
-`huabao-travel-content-planner` 用于华为杂志锁屏旅行风光内容的策划、审核和月报复盘。
+`huabao-travel-content-planner` 用于华为杂志锁屏旅行风光内容的策划、标题优化、候选审核和月报复盘。
 
-## v0.5.0 核心能力
+## v0.6.0 核心能力
 
-- 从**原始素材库最近新增链接**开始检索，不能跳过素材库。
-- 强制比对素材库 CSV、已做标题表与近期已出选题；同一概念族不可第三次使用。
-- 仅围绕自然异常、风光大片、有趣建筑组织旅行候选；历史冷知识仅作解释层。
-- 先核验封面、图片来源、事实和版权，再写标题。
-- 旅行标题 `≤7 字`、副标题 `≤25 字`；疑问句必须有中文问号。
-- 基于 103 个旅行参考标题与 45 个旅行风光标题，沉淀“反常问句、画面翻译、规则/避坑、空间反差、故事钩子”五类标题打法；机制可借，历史标题不可照抄。
-- 标题先通过对象锚点、画面证明、认知缺口、语言自然、事实兑现五项检查，再进入选题硬闸门。
-- 每条信息源必须使用 `[来源名·文章标题](https://...)`；实际打开原文标 `[已验证]`，线索标 `[待验证]`。
-- 使用 P 潜力和月报潜力两项独立评分；只有 `P≥7` 且 `月报≥8` 才标为“主推”。
+- 批量策划从原始素材库最近新增链接开始，并完成素材库、已做标题、近期已出选题三方概念去重。
+- 按任务模式加载资料：标题优化不强制读取去重数据，月报复盘不强制读取素材库。
+- 旅行标题 `≤7 字`、副标题 `≤25 字`；疑问句必须使用中文问号。
+- 使用反常问句、画面翻译、规则/避坑、空间反差、故事钩子五类标题打法，但不照抄案例。
+- 信息源使用 `[已验证] [来源名·文章标题](https://...)`；搜索线索只能标 `[待验证]`。
+- P 潜力与月报潜力独立评分；仅 `P≥7` 且 `月报≥8` 标“主推”。
+- 最终输出不单列“视觉类型”或“图片来源与版权状态”；两者仅用于内部筛选。
+- 月报复盘默认只给分析结论，只有用户明确要求时才更新知识库。
 
 ## 目录
 
 ```text
 .
-├── SKILL.md                         # 触发条件、执行工作流与交付契约
-├── agents/openai.yaml               # Codex UI 元数据
+├── SKILL.md
+├── README.md
+├── CHANGELOG.md
+├── .gitignore
+├── agents/openai.yaml
 ├── references/
-│   ├── data-contract.md             # 输入顺序、去重与来源格式
-│   ├── evidence-index.md            # 月报证据索引
-│   ├── travel-strategy.md           # 旅行专项策略
-│   └── title-playbook.md            # 标题样本分析与优化规范
+│   ├── data-contract.md
+│   ├── evidence-index.md
+│   ├── travel-strategy.md
+│   └── title-playbook.md
 ├── evals/
-│   ├── evals.json                   # 回归评测定义
-│   └── fixtures/                    # 可移植、脱敏的评测素材
-└── scripts/validate_candidate_output.py # 终稿格式硬校验
+│   ├── README.md
+│   ├── evals.json
+│   └── fixtures/
+└── scripts/
+    ├── validate_candidate_output.py
+    └── test_validate_candidate_output.py
 ```
 
 ## 使用前准备
 
-提供或确保可访问：
-
-1. 原始素材库 CSV；
-2. 已做标题表；
-3. 近期已出选题；
-4. 最新周数据与旅行月报；
-5. 热点任务所需的新闻原文、图片来源或授权线索。
-
-缺少前三项之一时，Skill 不得声称已完成概念级去重，也不得输出“主推”。
+- 批量策划和上线候选审核：原始素材库、已做标题表、近期已出选题；周数据和月报用于评分。
+- 标题表达优化：事实或画面题眼、原标题即可；缺三方数据时不会声明完成去重或标主推。
+- 月报/周数据复盘：对应报告或数据即可。
 
 ## 校验
 
 ```powershell
-$env:PYTHONUTF8='1'
-python C:\Users\zcy\.codex\skills\.system\skill-creator\scripts\quick_validate.py <skill目录>
+python "$env:CODEX_HOME\skills\.system\skill-creator\scripts\quick_validate.py" <skill目录>
+python scripts/test_validate_candidate_output.py
 python scripts/validate_candidate_output.py <候选输出.md>
 ```
 
-详细工作流见 [SKILL.md](SKILL.md)，标题规范见 [references/title-playbook.md](references/title-playbook.md)，数据契约见 [references/data-contract.md](references/data-contract.md)，策略证据见 [references/evidence-index.md](references/evidence-index.md)。
+`validate_candidate_output.py` 只校验可机械检查的最终格式，不证明来源真实、版权安全或去重已经实质完成。行为评测说明见 [evals/README.md](evals/README.md)。
