@@ -16,11 +16,13 @@ SOURCE_RE = re.compile(
 )
 FIELDS = {
     "status": "- 状态：",
+    "timeline": "- 素材范围 / 目标上线日 / 去重窗口：",
     "context": "- 当前关联：",
+    "style": "- 风格对标：",
     "subtitle": "- 副标题：",
     "landing": "- 落地页：",
     "source": "- 信息源：",
-    "dedup": "- 概念指纹与去重结论：",
+    "dedup": "- 去重回执：",
     "scores": "- P 潜力：",
     "risk": "- 审核风险：",
 }
@@ -91,6 +93,10 @@ def validate_block(number: int, title: str, declared: int, block: str) -> list[s
     status = values.get("status")
     if status is not None and status not in ALLOWED_STATUS:
         errors.append(f"选题 {number}：状态只能是“主推”或“备选”。")
+
+    dedup = values.get("dedup")
+    if dedup is not None and not all(token in dedup for token in ("H", "R", "B")):
+        errors.append(f"选题 {number}：去重回执必须包含 H、R、B 三层结果。")
 
     subtitle = values.get("subtitle")
     if subtitle is not None and count_chars(subtitle) > 25:

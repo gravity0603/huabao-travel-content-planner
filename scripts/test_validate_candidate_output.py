@@ -12,11 +12,13 @@ VALIDATOR = Path(__file__).with_name("validate_candidate_output.py")
 
 VALID = """### 选题 1：戈壁藏蓝瞳（5字）
 - 状态：主推
+- 素材范围 / 目标上线日 / 去重窗口：常青；2026-08-30；2026-07-31–2026-08-30
 - 当前关联：常青素材；盐泉地貌解释
+- 风格对标：盐泉 | 画面翻译 | 拟物 | 成因兑现
 - 副标题：荒漠盐泉呈现天然蓝洞
 - 落地页：解释盐泉颜色与地貌形成机制
 - 信息源：[已验证] [国家地理机构·荒漠盐泉地貌说明](https://science.example.cn/salt-spring)
-- 概念指纹与去重结论：荒漠盐泉 | 蓝色泉眼 | 盐泉成因 | 画面反差；三方未重复
+- 去重回执：H 通过；R 通过；B 通过；窗口 2026-07-31–2026-08-30；H/R 最近数据 2026-08-30 / 2026-08-30
 - P 潜力：8/10；月报潜力：8/10
 - 审核风险：无
 """
@@ -25,6 +27,8 @@ CASES = [
     ("valid", VALID, True),
     ("half-width-question", VALID.replace("戈壁藏蓝瞳", "海里有瀑布?").replace("（5字）", "（7字）"), False),
     ("missing-field", VALID.replace("- 落地页：解释盐泉颜色与地貌形成机制\n", ""), False),
+    ("missing-timeline", VALID.replace("- 素材范围 / 目标上线日 / 去重窗口：常青；2026-08-30；2026-07-31–2026-08-30\n", ""), False),
+    ("invalid-dedup-receipt", VALID.replace("H 通过；R 通过；B 通过", "H 通过；R 通过"), False),
     ("empty-subtitle", VALID.replace("- 副标题：荒漠盐泉呈现天然蓝洞", "- 副标题："), False),
     ("bad-status", VALID.replace("- 状态：主推", "- 状态：已上线"), False),
     ("score-out-of-range", VALID.replace("P 潜力：8/10", "P 潜力：99/10"), False),
