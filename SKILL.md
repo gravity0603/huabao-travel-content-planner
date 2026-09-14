@@ -3,6 +3,7 @@ name: huabao-travel-content-planner
 description: "华为杂志锁屏旅行风光专项策划、标题优化、候选审核与月报复盘助手。用户提到华为画报旅行、旅行风光选题、自然奇观、风光大片、有趣建筑、旅行热点、景点标题或旅行素材审核时使用。批量策划与上线审核必须先完成月报参考风格对齐、H/R/B 跨会话去重和来源/画面核验。"
 version: "0.9.0"
 group: 内容创作
+repo: "https://github.com/gravity0603/huabao-travel-content-planner"
 ---
 
 # 华为画报旅行风光专项策划
