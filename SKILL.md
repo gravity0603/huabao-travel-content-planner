@@ -1,7 +1,7 @@
 ---
 name: huabao-travel-content-planner
 description: "华为杂志锁屏旅行风光专项策划、标题优化、候选审核与月报复盘助手。用户提到华为画报旅行、旅行风光选题、自然奇观、风光大片、有趣建筑、旅行热点、景点标题或旅行素材审核时使用。批量策划与上线审核必须先完成月报参考风格对齐、H/R/B 跨会话去重和来源/画面核验。"
-version: "0.9.0"
+version: "0.9.1"
 group: 内容创作
 repo: "https://github.com/gravity0603/huabao-travel-content-planner"
 ---
@@ -18,6 +18,8 @@ repo: "https://github.com/gravity0603/huabao-travel-content-planner"
 | 标题分析、改写、压缩 | 共享治理契约、共享品类手册旅行章节、`title-playbook.md`、原始事实与首图题眼 |
 | 来源或去重审核 | 共享治理契约、`data-contract.md` |
 | 月报/周数据复盘 | `travel-strategy.md`、`evidence-index.md` |
+
+月度复盘若限定“当月制作图组”，先按共享 `selection-governance.md` 的月度 N/P 回执取队列：N 列标题、P 列标题粒度详情页曝光，同名取最大 P。A-L 全量在库图组只作辅助，不得替代 N 列新图组排行。原表旅行标签还需排除情绪文字壁纸及其他错标，确认是地点、景观或建筑后再归纳旅行题型；月报同名案例与标题 P 分开判断。
 
 安装后从本 Skill 目录解析共享治理契约`../huabao-content-planner/references/selection-governance.md`；品类手册在同目录`category-style-playbook.md`。用户当次指定素材范围优先；默认热点近30天仅在用户未指定时适用。目标上线日与至少30天去重窗口独立记录。生成前先做品类路由：地点/景观/旅行生活归旅行；工艺审美归艺术；纯交通工具结构归座驾/交通；纯工程机制归科技。
 
