@@ -1,3 +1,9 @@
+> 本仓库已于2026-10-14迁移到 [gravity0603/huabao](https://github.com/gravity0603/huabao)。后续统一在那里维护；本仓库保留历史并归档。
+
+- [skills/huabao-travel-content-planner](https://github.com/gravity0603/huabao/tree/main/skills/huabao-travel-content-planner)
+
+---
+
 # 华为画报旅行风光专项 Skill
 
 `huabao-travel-content-planner` 用于华为杂志锁屏旅行风光内容的策划、标题优化、候选审核和月报复盘。
